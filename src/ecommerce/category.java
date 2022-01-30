@@ -11,6 +11,12 @@ import java.util.logging.Logger;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
+
 
 
 /**
@@ -24,6 +30,7 @@ public class category extends javax.swing.JFrame {
      */
     public category() {
         initComponents();
+        getData();
     }
     Connection con1;
     PreparedStatement pst;
@@ -43,8 +50,8 @@ public class category extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         kategori_emer = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        modifiko_button = new javax.swing.JButton();
+        fshi_button = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -79,9 +86,21 @@ public class category extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Modifiko");
+        modifiko_button.setText("Modifiko");
+        modifiko_button.setEnabled(false);
+        modifiko_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifiko_buttonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Fshi");
+        fshi_button.setText("Fshi");
+        fshi_button.setEnabled(false);
+        fshi_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fshi_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,9 +116,9 @@ public class category extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jButton1)
                 .addGap(29, 29, 29)
-                .addComponent(jButton2)
+                .addComponent(modifiko_button)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(fshi_button)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,8 +131,8 @@ public class category extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(modifiko_button)
+                    .addComponent(fshi_button))
                 .addGap(21, 21, 21))
         );
 
@@ -131,6 +150,11 @@ public class category extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -192,7 +216,34 @@ public class category extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    private void getData(){
+        int numerim ;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","root","");
+            pst = con1.prepareStatement("select * from kategori");
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData rsd = rs.getMetaData();
+            numerim= rsd.getColumnCount();
+            DefaultTableModel d = (DefaultTableModel)jTable1.getModel();
+            d.setRowCount(0);
+            while(rs.next()){
+               Vector arr = new Vector();
+               for(int i=1;i<=numerim;i++){
+                arr.add(rs.getString("id"));
+                arr.add(rs.getString("kategori_emer"));
 
+               
+               }
+               d.addRow(arr);
+            
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void kategori_emerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kategori_emerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kategori_emerActionPerformed
@@ -206,14 +257,77 @@ public class category extends javax.swing.JFrame {
             pst.setString(1,emer);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null,"Kategoria u krijua me sukses!");
+             getData();
             kategori_emer.setText("");
             kategori_emer.requestFocus();
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    DefaultTableModel d1 = (DefaultTableModel)jTable1.getModel();
+    int selectedIndex = jTable1.getSelectedRow();
+    kategori_emer.setText(d1.getValueAt(selectedIndex,1).toString());
+    modifiko_button.setEnabled(true);
+    fshi_button.setEnabled(true);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void modifiko_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifiko_buttonActionPerformed
+        DefaultTableModel d1 = (DefaultTableModel)jTable1.getModel();
+        int selectedIndex = jTable1.getSelectedRow(); 
+        int id = Integer.parseInt(d1.getValueAt(selectedIndex,0).toString());
+        String emer = kategori_emer.getText();
+         try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","root","");
+            pst = con1.prepareStatement("update kategori set kategori_emer=? where id = ?");
+            pst.setString(1,emer);
+            pst.setInt(2,id);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Kategoria u modifikuar me sukses!");
+             getData();
+            kategori_emer.setText("");
+            kategori_emer.requestFocus();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_modifiko_buttonActionPerformed
+
+    private void fshi_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fshi_buttonActionPerformed
+        DefaultTableModel d1 = (DefaultTableModel)jTable1.getModel();
+        int selectedIndex = jTable1.getSelectedRow();
+        int id = Integer.parseInt(d1.getValueAt(selectedIndex,0).toString());
+        int dialogResult = JOptionPane.showConfirmDialog(null,"Jeni te sigurt qe deshironi te kryeni kete veprim?","Warning",JOptionPane.YES_NO_OPTION); 
+        if(dialogResult == JOptionPane.YES_OPTION){
+        
+          try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","root","");
+            pst = con1.prepareStatement("delete from kategori where id =?");
+            pst.setInt(1,id);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Kategoria u fshi me sukses!");
+             getData();
+            kategori_emer.setText("");
+            kategori_emer.requestFocus();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
+    }//GEN-LAST:event_fshi_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,9 +365,8 @@ public class category extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton fshi_button;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -267,5 +380,6 @@ public class category extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField kategori_emer;
+    private javax.swing.JButton modifiko_button;
     // End of variables declaration//GEN-END:variables
 }
