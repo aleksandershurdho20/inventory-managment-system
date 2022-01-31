@@ -31,6 +31,7 @@ public class KrijoProdukt extends javax.swing.JFrame {
     public KrijoProdukt() {
         initComponents();
         category();
+        loadProducts();
        
     }
     public class  Categoryitem{
@@ -40,8 +41,7 @@ public class KrijoProdukt extends javax.swing.JFrame {
     public Categoryitem(int id, String kategori_emer){
     
       this.id = id;
-      this.kategori_emer=kategori_emer;
-     
+      this.kategori_emer = kategori_emer;
     }
     
     public String parseName(){
@@ -76,8 +76,12 @@ public class KrijoProdukt extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         kategori_items = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        produkt_status = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -107,7 +111,7 @@ public class KrijoProdukt extends javax.swing.JFrame {
 
         jLabel3.setText("Statusi");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        produkt_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "I disponueshem", "I shitur" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -137,8 +141,8 @@ public class KrijoProdukt extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(produkt_cmim)
                     .addComponent(produkt_sasia)
-                    .addComponent(jComboBox2, 0, 200, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(produkt_status, 0, 200, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +168,7 @@ public class KrijoProdukt extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(kategori_items, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(produkt_status, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -174,6 +178,28 @@ public class KrijoProdukt extends javax.swing.JFrame {
         );
 
         jButton1.setText("Krijo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel8.setText("Filtro SIpas Cmimit");
+
+        jLabel9.setText("Filtro SIpas Cmimit");
 
         jMenu1.setText("Kategori");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -205,29 +231,57 @@ public class KrijoProdukt extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 18, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(149, Short.MAX_VALUE))
+                        .addGap(204, 204, 204)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(64, 64, 64)))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(974, Short.MAX_VALUE)
+                    .addComponent(jLabel9)
+                    .addGap(329, 329, 329)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(66, 66, 66)
+                    .addComponent(jLabel9)
+                    .addContainerGap(515, Short.MAX_VALUE)))
         );
 
         pack();
@@ -235,18 +289,54 @@ public class KrijoProdukt extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
+    
+    public void loadProducts(){
+        int numerim = 0;
+       try {
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","admin","admin");
+            pst = con1.prepareStatement("select p.emer_produkti,p.pershkrimi,p.kategori_id,p.cmimi,p.sasia,p.statusi from produkt p JOIN kategori k ON p.kategori_id = k.id");
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData rsd = rs.getMetaData();
+            numerim= rsd.getColumnCount();
+            DefaultTableModel d = (DefaultTableModel)jTable1.getModel();
+            d.setRowCount(0);
+            while(rs.next()){
+
+                  Vector arr = new Vector();
+               for(int i=1;i<=numerim;i++){
+                arr.add(rs.getString("p.emer_produkti"));
+                arr.add(rs.getString("p.pershkrimi"));
+                arr.add(rs.getString("p.kategori_id"));
+                arr.add(rs.getString("p.cmimi"));
+                arr.add(rs.getString("p.sasia"));
+                arr.add(rs.getString("p.statusi"));
+
+               
+               }
+               d.addRow(arr);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    }
     private void category(){
          try {
          Class.forName("com.mysql.jdbc.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","root","");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","admin","admin");
             pst = con1.prepareStatement("select * from kategori");
             ResultSet rs = pst.executeQuery();
             kategori_items.removeAllItems();
             while(rs.next()){
 
-          kategori_items.addItem(new Categoryitem(rs.getInt(1), rs.getString(2)));
+//            kategori_items.addItem(new Categoryitem(rs.getInt(1), rs.getString(2)));
+             Categoryitem categoryitem = new Categoryitem(rs.getInt(1), rs.getString(2));
+        kategori_items.addItem(rs.getString(2));
+                kategori_items.addItem(rs.getString(1));
 
-            
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -258,6 +348,48 @@ public class KrijoProdukt extends javax.swing.JFrame {
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String emer_produkti = produkt_emer.getText();
+        String pershkrimi = produkt_pershkrim.getText();
+     //Categoryitem kategori_id = (Categoryitem)kategori_items.getSelectedItem();
+        String cmimi = produkt_cmim.getText();
+       String sasia = produkt_sasia.getText();
+       String status = produkt_status.getSelectedItem().toString();
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/dyqani24","admin","admin");
+            pst = con1.prepareStatement("insert into produkt (emer_produkti,pershkrimi,kategori_id,cmimi,sasia,statusi)values(?,?,?,?,?,?)");
+            pst.setString(1,emer_produkti);
+            pst.setString(2,pershkrimi);
+            // change to the selected category id
+            pst.setInt(3,2);
+
+            pst.setString(4,cmimi);
+            pst.setString(5,sasia);
+            pst.setString(6,status);
+
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Produkti u krijua me sukses!");
+            produkt_emer.setText("");
+            produkt_pershkrim.setText("");
+            kategori_items.setSelectedIndex(0);
+
+            produkt_cmim.setText("");
+            produkt_sasia.setText("");
+            produkt_status.setSelectedIndex(0);
+
+
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -297,7 +429,6 @@ public class KrijoProdukt extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -305,6 +436,8 @@ public class KrijoProdukt extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
@@ -313,11 +446,14 @@ public class KrijoProdukt extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox kategori_items;
     private javax.swing.JTextField produkt_cmim;
     private javax.swing.JTextField produkt_emer;
     private javax.swing.JTextArea produkt_pershkrim;
     private javax.swing.JTextField produkt_sasia;
+    private javax.swing.JComboBox<String> produkt_status;
     // End of variables declaration//GEN-END:variables
 }
