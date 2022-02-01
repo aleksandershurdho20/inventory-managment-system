@@ -82,6 +82,8 @@ public class KrijoProdukt extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        filter_cmim = new javax.swing.JComboBox<>();
+        filter_status = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -186,20 +188,34 @@ public class KrijoProdukt extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Emri I produktit", "Pershkrimi", "Kategoria", "Cmimi", "Sasia", "Statusi"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel8.setText("Filtro SIpas Cmimit");
+        jLabel8.setText("Filtro SIpas Statusit");
 
         jLabel9.setText("Filtro SIpas Cmimit");
+
+        filter_cmim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "I larte", "I ulet" }));
+        filter_cmim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filter_cmimActionPerformed(evt);
+            }
+        });
+
+        filter_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "I shitur", "I disponueshem" }));
+        filter_status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filter_statusActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Kategori");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -240,7 +256,7 @@ public class KrijoProdukt extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 18, Short.MAX_VALUE)
+                                .addGap(0, 23, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
@@ -250,8 +266,13 @@ public class KrijoProdukt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(64, 64, 64)))
+                        .addGap(0, 13, Short.MAX_VALUE)
+                        .addComponent(filter_cmim, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(filter_status, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -269,7 +290,11 @@ public class KrijoProdukt extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(filter_cmim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filter_status, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,7 +314,8 @@ public class KrijoProdukt extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    
+    Functions fn = new Functions();
+
     public void loadProducts(){
         int numerim = 0;
        try {
@@ -390,6 +416,34 @@ public class KrijoProdukt extends javax.swing.JFrame {
             Logger.getLogger(category.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void filter_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter_statusActionPerformed
+        
+        String query = "select * from produkt where produkt.statusi = ? ";
+        Functions.filterTable(jTable1, query, filter_status,false,"");
+        
+      
+        
+        
+    }//GEN-LAST:event_filter_statusActionPerformed
+
+    private void filter_cmimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter_cmimActionPerformed
+        // TODO add your handling code here:
+        String query = "select * from produkt order by cmimi = ?";
+        String selectedValue = filter_cmim.getSelectedItem().toString();
+        String result = "";
+        if(selectedValue.equals("I larte")){
+        
+            result="asc";
+        }
+        else{
+        
+            result ="desc";
+        }
+        
+        Functions.filterTable(jTable1, query, filter_cmim,true,result);
+
+    }//GEN-LAST:event_filter_cmimActionPerformed
     
     /**
      * @param args the command line arguments
@@ -428,6 +482,8 @@ public class KrijoProdukt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> filter_cmim;
+    private javax.swing.JComboBox<String> filter_status;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
